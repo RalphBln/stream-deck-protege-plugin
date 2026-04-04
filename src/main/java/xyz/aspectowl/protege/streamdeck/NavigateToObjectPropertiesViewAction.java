@@ -1,9 +1,13 @@
 package xyz.aspectowl.protege.streamdeck;
 
 import java.awt.event.ActionEvent;
+import java.util.Optional;
 
 import javax.swing.JOptionPane;
 
+import org.protege.editor.core.ui.workspace.TabbedWorkspace;
+import org.protege.editor.owl.OWLEditorKit;
+import org.protege.editor.owl.OWLEditorKitFactory;
 import org.protege.editor.owl.ui.action.ProtegeOWLAction;
 
 public class NavigateToObjectPropertiesViewAction extends ProtegeOWLAction {
@@ -15,10 +19,8 @@ public class NavigateToObjectPropertiesViewAction extends ProtegeOWLAction {
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
-		StringBuilder message = new StringBuilder("Yet another example menu item.\n");
-		message.append("The active ontology has ");
-		message.append(getOWLModelManager().getActiveOntology().getObjectPropertiesInSignature().size());
-		message.append(" object properties.");
-		JOptionPane.showMessageDialog(getOWLWorkspace(), message.toString());
+		((TabbedWorkspace) getOWLWorkspace()).getWorkspaceTab("org.protege.editor.owl.OWLEntitesTab").requestSelection();
+		getOWLEditorKit().getOWLWorkspace().getViewManager().bringViewToFront("org.protege.editor.owl.OWLObjectPropertyTree");
 	}
+	
 }
