@@ -2,13 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	
-	<groupId>edu.stanford.protege</groupId>
-	<artifactId>protege.plugin.examples</artifactId>
-	<version>2.0.0-SNAPSHOT</version>
+	<groupId>xyz.aspectowl</groupId>
+	<artifactId>streamdeck-protege-plugin</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 
-	<name>Protege Plugin Examples</name>
-	<description>Example plug-ins for the Protege Desktop ontology editor, e.g., views, menu items, etc.</description>
+	<name>Elgato Stream Deck Integration with Protégé</name>
+	<description>A plug-in for controlling Protégé with an Elgato Stream Deck device.</description>
 	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -18,7 +18,7 @@
         <dependency>
 			<groupId>edu.stanford.protege</groupId>
             <artifactId>protege-editor-owl</artifactId>
-			<version>5.0.0</version>
+			<version>5.6.6</version>
         </dependency>
 	</dependencies>
 
@@ -36,39 +36,124 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.3</version>
+				<version>3.14.1</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>15</source>
+					<target>15</target>
 				</configuration>
 			</plugin>
             
             <plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
-				<version>3.0.0</version>
+				<version>5.1.8</version>
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
 						<Bundle-Activator>org.protege.editor.owl.ProtegeOWL</Bundle-Activator>
 						<Bundle-ClassPath>.</Bundle-ClassPath>
 						<Bundle-SymbolicName>${project.artifactId};singleton:=true</Bundle-SymbolicName>
-						<Bundle-Vendor>The Protege Development Team</Bundle-Vendor>
+						<Bundle-Vendor>Ralph Schäfermeier</Bundle-Vendor>
 						<Import-Package>
-							org.protege.editor.owl.*;version="5.0.0", <!-- equivalent to [5.0.0,infinity) -->
+							org.protege.editor.owl.*;version="5.6.6", <!-- equivalent to [5.0.0,infinity) -->
 							*
 						</Import-Package>
 					</instructions>
 				</configuration>
             </plugin>
-            
+
 			<plugin>
-				<artifactId>maven-eclipse-plugin</artifactId>
-				<version>2.9</version>
-				<configuration>
-					<pde>true</pde>
-				</configuration>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.7</version>
+				<executions>
+					<execution>
+						<id>copy-resource-one</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+
+						<configuration>
+							<outputDirectory>${protege.install.location}/plugins</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${basedir}/target</directory>
+									<includes>
+										<include>streamdeck-protege-plugin-${project.version}.jar</include>
+									</includes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
+			<plugin><!--For easier debugging. TODO remove-->
+				<artifactId>exec-maven-plugin</artifactId>
+				<groupId>org.codehaus.mojo</groupId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<id>Stop running Protégé instance</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>osascript</executable>
+							<arguments>
+								<argument>build/helpers/stop-protege.applescript</argument>
+							</arguments>
+							<successCodes>
+								<code>0</code>
+								<code>1</code>
+							</successCodes>
+						</configuration>
+					</execution>
+					<execution>
+						<id>Restart Protégé</id>
+						<phase>package</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>osascript</executable>
+							<commandlineArgs>-e 'tell application "iTerm"' -e 'set newWindow to (create window with profile "protege-test-run")' -e 'tell current session of newWindow' -e 'write text "JAVA_HOME=\"$(/usr/libexec/java_home -v 15)\" ${protege.install.location}/run.command ${project.basedir}/src/test/resources/temporal-interaction.owl"' -e 'end tell' -e 'end tell'</commandlineArgs>
+							<async>true</async>
+							<asyncDestroyOnShutdown>false</asyncDestroyOnShutdown>
+						</configuration>
+					</execution>
+					<execution>
+						<id>Wait for Protégé debugger agent</id>
+						<phase>package</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>zsh</executable>
+							<commandlineArgs>build/helpers/wait-for-protege-debug-agent.sh</commandlineArgs>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>1.1.0</version>
+				<executions>
+					<execution>
+						<phase>initialize</phase>
+						<goals>
+							<goal>read-project-properties</goal>
+						</goals>
+						<configuration>
+							<files>
+								<file>build/helpers/dev.properties</file>
+							</files>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 </project>
