@@ -1,4 +1,4 @@
-package edu.stanford.bmir.protege.examples.menu;
+package xyz.aspectowl.protege.streamdeck;
 
 import java.awt.event.ActionEvent;
 
@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 
 import org.protege.editor.owl.ui.action.ProtegeOWLAction;
 
-public class UnderSubMenu extends ProtegeOWLAction {
+public class NavigateToObjectPropertiesViewAction extends ProtegeOWLAction {
 
 	public void initialise() throws Exception {
 	}

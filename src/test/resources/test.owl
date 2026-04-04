@@ -1,0 +1,59 @@
+Prefix(:=<http://aspectowl.xyz/test/>)
+Prefix(owl:=<http://www.w3.org/2002/07/owl#>)
+Prefix(rdf:=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>)
+Prefix(xml:=<http://www.w3.org/XML/1998/namespace>)
+Prefix(xsd:=<http://www.w3.org/2001/XMLSchema#>)
+Prefix(rdfs:=<http://www.w3.org/2000/01/rdf-schema#>)
+
+
+Ontology(<http://aspectowl.xyz/test>
+Annotation(rdfs:comment "Test ontology")
+
+Declaration(Class(:A))
+Declaration(Class(:AA))
+Declaration(Class(:AB))
+Declaration(Class(:B))
+Declaration(ObjectProperty(:r))
+Declaration(ObjectProperty(:s))
+Declaration(DataProperty(:d))
+Declaration(DataProperty(:e))
+Declaration(NamedIndividual(:I1))
+Declaration(NamedIndividual(:I2))
+Declaration(NamedIndividual(:I3))
+Declaration(AnnotationProperty(:a))
+
+
+
+
+############################
+#   Classes
+############################
+
+# Class: :AA (:AA)
+
+SubClassOf(:AA :A)
+
+# Class: :AB (:AB)
+
+SubClassOf(:AB :A)
+
+
+############################
+#   Named Individuals
+############################
+
+# Individual: :I1 (:I1)
+
+ClassAssertion(:A :I1)
+
+# Individual: :I2 (:I2)
+
+ClassAssertion(:AB :I2)
+
+# Individual: :I3 (:I3)
+
+ClassAssertion(:AA :I3)
+ClassAssertion(:B :I3)
+
+
+)
