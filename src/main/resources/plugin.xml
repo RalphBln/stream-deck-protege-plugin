@@ -2,26 +2,11 @@
 <?eclipse version="3.0"?>
 
 <plugin>
-	<!-- Menu and menu items -->
-
-    <extension id="navmenu" point="org.protege.editor.core.application.EditorKitMenuAction">
-        <name value="Navigate"/>
-        <path value="/SlotG-A"/>
-        <editorKitId value="any"/>
+    <extension
+            id="StreamDeckForProtegePluginInitializer"
+            name="Control Protégé using an Elgato Stream Deck device"
+            point="org.protege.editor.core.application.EditorKitHook">
+        <class value="xyz.aspectowl.protege.streamdeck.StreamDeckEditorKitHook"/>
+        <editorKitId value="OWLEditorKit"/>
     </extension>
-
-    <extension id="navmenu1" point="org.protege.editor.core.application.EditorKitMenuAction">
-        <name value="Classes"/>
-        <path value="${project.artifactId}.navmenu/SlotGA-A"/>
-	    <editorKitId value="OWLEditorKit"/>
-    </extension> 
-
-    <extension id="navmenu2" point="org.protege.editor.core.application.EditorKitMenuAction">
-        <name value="Object Properties"/>
-        <path value="${project.artifactId}.navmenu/SlotGA-B"/>
-        <toolTip value="Navigates to the object properties view of the Entities tab."/>
-        <class value="xyz.aspectowl.protege.streamdeck.NavigateToObjectPropertiesViewAction"/>
-        <editorKitId value="any"/>
-    </extension>
-    
 </plugin>

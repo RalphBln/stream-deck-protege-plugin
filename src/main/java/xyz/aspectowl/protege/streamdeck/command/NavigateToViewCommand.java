@@ -1,0 +1,39 @@
+package xyz.aspectowl.protege.streamdeck.command;
+
+import org.protege.editor.core.ui.workspace.WorkspaceTab;
+import org.protege.editor.owl.OWLEditorKit;
+
+public final class NavigateToViewCommand extends CommandExecutor<NavigateToViewCommand.NavigateToViewParameters> {
+  
+  @Override
+  public void execute(OWLEditorKit editorKit) {
+    WorkspaceTab tab = editorKit.getOWLWorkspace().getWorkspaceTab(getParameters().getTabId());
+    if (tab == null) {
+      throw new IllegalArgumentException("Illegal tab id " + getParameters().getTabId());
+    }
+    tab.requestSelection();
+    editorKit.getOWLWorkspace().getViewManager().bringViewToFront(getParameters().getViewId());
+  }
+  
+  class NavigateToViewParameters implements CommandParameters {
+    
+    private String tabId;
+    private String viewId;
+    
+    public String getTabId() {
+      return tabId;
+    }
+    
+    public void setTabId(String tabId) {
+      this.tabId = tabId;
+    }
+    
+    public String getViewId() {
+      return viewId;
+    }
+    
+    public void setViewId(String viewId) {
+      this.viewId = viewId;
+    }
+  }
+}

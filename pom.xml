@@ -20,6 +20,28 @@
             <artifactId>protege-editor-owl</artifactId>
 			<version>5.6.6</version>
         </dependency>
+		<dependency>
+			<groupId>org.java-websocket</groupId>
+			<artifactId>Java-WebSocket</artifactId>
+			<version>1.6.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.13.2</version>
+		</dependency>
+		<!-- Source: https://mvnrepository.com/artifact/com.google.code.gson/gson-extras -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson-extras</artifactId>
+			<version>2.13.2-rc1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -58,6 +80,13 @@
 							org.protege.editor.owl.*;version="5.6.6", <!-- equivalent to [5.0.0,infinity) -->
 							*
 						</Import-Package>
+						<Embed-Dependency>
+							Java-WebSocket,
+							gson,
+							gson-extras
+						</Embed-Dependency>
+						<!-- Reference: https://github.com/bndtools/bnd/issues/3514#issuecomment-1320881963 -->
+						<_fixupmessages>"Classes found in the wrong directory"; restrict:=error; is:=warning</_fixupmessages>
 					</instructions>
 				</configuration>
             </plugin>
