@@ -15,7 +15,7 @@ public final class NavigateToViewCommand extends CommandExecutor<NavigateToViewC
     editorKit.getOWLWorkspace().getViewManager().bringViewToFront(getParameters().getViewId());
   }
   
-  class NavigateToViewParameters implements CommandParameters {
+  static class NavigateToViewParameters implements CommandParameters {
     
     private String tabId;
     private String viewId;
@@ -24,6 +24,7 @@ public final class NavigateToViewCommand extends CommandExecutor<NavigateToViewC
       return tabId;
     }
     
+    @SuppressWarnings("unused")
     public void setTabId(String tabId) {
       this.tabId = tabId;
     }
@@ -32,6 +33,7 @@ public final class NavigateToViewCommand extends CommandExecutor<NavigateToViewC
       return viewId;
     }
     
+    @SuppressWarnings("unused")
     public void setViewId(String viewId) {
       this.viewId = viewId;
     }

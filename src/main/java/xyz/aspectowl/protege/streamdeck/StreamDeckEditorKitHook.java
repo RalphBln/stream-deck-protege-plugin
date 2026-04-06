@@ -9,7 +9,7 @@ public class StreamDeckEditorKitHook extends OWLEditorKitHook {
   private StreamDeckWebSocketServer streamDeck;
   
   @Override
-  public void initialise() throws Exception {
+  public void initialise() {
     streamDeck = new StreamDeckWebSocketServer(new InetSocketAddress(8910), getEditorKit());
     streamDeck.start();
   }

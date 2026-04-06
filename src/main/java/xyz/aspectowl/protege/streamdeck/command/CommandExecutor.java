@@ -8,7 +8,8 @@ public abstract class CommandExecutor<T extends CommandParameters> {
   
   public abstract void execute(OWLEditorKit editorKit) throws Exception;
   
-  protected void setParameters(T parameters) {
+  @SuppressWarnings("unused")
+  public void setParameters(T parameters) {
     this.parameters = parameters;
   }
   
