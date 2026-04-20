@@ -22,6 +22,18 @@ Declaration(NamedIndividual(:I2))
 Declaration(NamedIndividual(:I3))
 Declaration(AnnotationProperty(:a))
 
+############################
+#   Object Properties
+############################
+
+# Object Property: :r (:r)
+
+TransitiveObjectProperty(:r)
+
+# Object Property: :s (:s)
+
+SymmetricObjectProperty(:s)
+
 
 
 
@@ -45,10 +57,13 @@ SubClassOf(:AB :A)
 # Individual: :I1 (:I1)
 
 ClassAssertion(:A :I1)
+ObjectPropertyAssertion(:r :I1 :I2)
+ObjectPropertyAssertion(:s :I1 :I3)
 
 # Individual: :I2 (:I2)
 
 ClassAssertion(:AB :I2)
+ObjectPropertyAssertion(:r :I2 :I3)
 
 # Individual: :I3 (:I3)
 

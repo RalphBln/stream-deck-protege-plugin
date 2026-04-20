@@ -3,16 +3,18 @@ package xyz.aspectowl.protege.streamdeck.command;
 import org.protege.editor.core.ui.workspace.WorkspaceTab;
 import org.protege.editor.owl.OWLEditorKit;
 
-public final class NavigateToViewCommand extends CommandExecutor<NavigateToViewCommand.NavigateToViewParameters> {
+public final class NavigateToViewCommand extends CommandExecutor<NavigateToViewCommand.NavigateToViewParameters, NavigateToViewCommand.NavigateToViewResult> {
   
   @Override
-  public void execute(OWLEditorKit editorKit) {
+  public NavigateToViewResult execute(OWLEditorKit editorKit) {
     WorkspaceTab tab = editorKit.getOWLWorkspace().getWorkspaceTab(getParameters().getTabId());
     if (tab == null) {
       throw new IllegalArgumentException("Illegal tab id " + getParameters().getTabId());
     }
     tab.requestSelection();
     editorKit.getOWLWorkspace().getViewManager().bringViewToFront(getParameters().getViewId());
+    
+    return new NavigateToViewResult();
   }
   
   static class NavigateToViewParameters implements CommandParameters {
@@ -37,5 +39,9 @@ public final class NavigateToViewCommand extends CommandExecutor<NavigateToViewC
     public void setViewId(String viewId) {
       this.viewId = viewId;
     }
+  }
+  
+  static class NavigateToViewResult implements CommandResult {
+  
   }
 }

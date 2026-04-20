@@ -1,0 +1,51 @@
+{
+	"Name": "Protégé",
+	"Version": "0.1.0.0",
+	"Author": "Ralph Schäfermeier",
+	"Actions": [
+		{
+			"Name": "Navigate",
+			"UUID": "xyz.aspectowl.protege.streamdeck.navigate",
+			"Icon": "imgs/actions/navigate/icon",
+			"Tooltip": "Displays a count, which increments by one on press.",
+			"PropertyInspectorPath": "ui/navigate.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/navigate/key-annotationproperty",
+					"TitleAlignment": "bottom"
+				}
+			]
+		}
+	],
+	"Category": "Protégé",
+	"CategoryIcon": "imgs/plugin/category-icon",
+	"CodePath": "bin/plugin.js",
+	"Description": "Control the Protégé OWL editor with Stream Deck",
+	"Icon": "imgs/plugin/marketplace",
+	"SDKVersion": 3,
+	"Software": {
+		"MinimumVersion": "6.9"
+	},
+	"OS": [
+		{
+			"Platform": "mac",
+			"MinimumVersion": "12"
+		},
+		{
+			"Platform": "windows",
+			"MinimumVersion": "10"
+		}
+	],
+	"Nodejs": {
+		"Version": "20",
+		"Debug": "enabled"
+	},
+	"ApplicationsToMonitor": {
+		"mac": ["edu.stanford.protege"],
+		"windows": ["Protege.exe"]
+	},
+	"UUID": "xyz.aspectowl.protege.streamdeck"
+}

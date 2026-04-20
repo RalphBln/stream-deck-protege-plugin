@@ -2,11 +2,11 @@ package xyz.aspectowl.protege.streamdeck.command;
 
 import org.protege.editor.owl.OWLEditorKit;
 
-public abstract class CommandExecutor<T extends CommandParameters> {
+public abstract class CommandExecutor<T extends CommandParameters, S extends CommandResult> {
   
   private T parameters;
   
-  public abstract void execute(OWLEditorKit editorKit) throws Exception;
+  public abstract S execute(OWLEditorKit editorKit) throws Exception;
   
   @SuppressWarnings("unused")
   public void setParameters(T parameters) {
@@ -15,5 +15,9 @@ public abstract class CommandExecutor<T extends CommandParameters> {
   
   public T getParameters() {
     return parameters;
+  }
+  
+  static class SuccessResult implements CommandResult {
+    String success;
   }
 }
